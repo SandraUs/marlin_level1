@@ -46,13 +46,23 @@ $user = get_user_by_email($email);
 
 //Устанавливаем flash сообщение
 function set_flash_message ($name, $message){
+
     $_SESSION["success"] = "Регистрация успешна";
 }
 
 //Вывод сообщения
-function display_flash_message ($name){}
+function display_flash_message ($name){
+    
+   if (isset($_SESSION[$name])) {
+      echo "<div class=\"alert alert-$name\">$_SESSION[$name]</div>";
+      unset($_SESSION[$name]);
+    }
+}
 
 //Перенаправление на другую страницу
 function redirect_to ($path){
-    header("Location: /marlin/page_login.php");
+
+    header('Location: '.$path.'.php');
+    exit;
+    //header("Location: /marlin/page_login.php");
 }
