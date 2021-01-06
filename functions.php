@@ -47,12 +47,13 @@ $user = get_user_by_email($email);
 //Устанавливаем flash сообщение
 function set_flash_message ($name, $message){
 
-    $_SESSION["success"] = "Регистрация успешна";
+    $_SESSION['name'] = $name;
+    $_SESSION['message'] = $message;
 }
 
 //Вывод сообщения
 function display_flash_message ($name){
-    
+
    if (isset($_SESSION[$name])) {
       echo "<div class=\"alert alert-$name\">$_SESSION[$name]</div>";
       unset($_SESSION[$name]);
