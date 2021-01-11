@@ -48,7 +48,7 @@ $user = get_user_by_email($email);
 function set_flash_message ($name, $message){
 
     $_SESSION['name'] = $name;
-    $_SESSION['message'] = $message;
+    $_SESSION['status_message'] = $name;
 }
 
 //Вывод сообщения
