@@ -48,7 +48,6 @@ $user = get_user_by_email($email);
 function set_flash_message ($name, $message){
 
     $_SESSION[$name] = $message;
-    $_SESSION['status_message'] = $name;
 }
 
 //Вывод сообщения
@@ -57,7 +56,6 @@ function display_flash_message ($name){
    if (isset($_SESSION[$name])) {
       echo "<div class=\"alert alert-$name\">$_SESSION[$name]</div>";
       unset($_SESSION[$name]);
-      unset($_SESSION['status_message']);
     }
 }
 

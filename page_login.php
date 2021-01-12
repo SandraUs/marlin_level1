@@ -37,7 +37,7 @@ require_once'functions.php';
             </a>
         </div>
         <div class="card p-4 border-top-left-radius-0 border-top-right-radius-0">
-          <?php display_flash_message($_SESSION['status_message']);?>
+          <?php display_flash_message($_SESSION[$name]);?>
 
             <form action="">
                 <div class="form-group">
