@@ -59,6 +59,23 @@ function display_flash_message ($name){
     }
 }
 
+function is_not_logged_in () {
+
+    if(isset($_SESSION['email']) && !empty($_SESSION['email'])) {
+        return false;
+    }
+
+    return true;
+};
+
+function check_admin () {
+    if($_SESSION['role'] == "admin") {
+        return true;
+    }
+    return false;
+};
+
+
 //Перенаправление на другую страницу
 function redirect_to ($path){
 
