@@ -73,8 +73,10 @@ if (is_not_logged_in()) {
                 </div>
             </div>
             <div class="row" id="js-contacts">
+                <?php $email = get_user_by_email_or_id("autorize");
+                foreach ($email as $value): ?>
                 <div class="col-xl-4">
-                    <div id="c_1" class="card border shadow-0 mb-g shadow-sm-hover" data-filter-tags="oliver kopyov">
+                    <div id="c_1" class="card border shadow-0 mb-g shadow-sm-hover" data-filter-tags="<?php echo $value['Name']; ?>">
                         <div class="card-body border-faded border-top-0 border-left-0 border-right-0 rounded-top">
                             <div class="d-flex flex-row align-items-center">
                                 <span class="status status-success mr-3">
@@ -82,10 +84,14 @@ if (is_not_logged_in()) {
                                 </span>
                                 <div class="info-card-text flex-1">
                                     <a href="javascript:void(0);" class="fs-xl text-truncate text-truncate-lg text-info" data-toggle="dropdown" aria-expanded="false">
-                                        Oliver Kopyov
+                                         <?php echo $value['Name']; ?>
+
+                                         <?php if (check_admin() || $_SESSION['email'] == $value['email']) :?>
                                         <i class="fal fas fa-cog fa-fw d-inline-block ml-1 fs-md"></i>
                                         <i class="fal fa-angle-down d-inline-block ml-1 fs-md"></i>
+                                         <?php endif; ?>
                                     </a>
+                                    <?php if (check_admin() || $_SESSION['email'] == $value['email']) :?>
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item" href="edit.html">
                                             <i class="fa fa-edit"></i>
@@ -105,6 +111,8 @@ if (is_not_logged_in()) {
                                             Удалить
                                         </a>
                                     </div>
+                                    <?php endif; ?>
+                                    
                                     <span class="text-truncate text-truncate-xl">IT Director, Gotbootstrap Inc.</span>
                                 </div>
                                 <button class="js-expand-btn btn btn-sm btn-default d-none" data-toggle="collapse" data-target="#c_1 > .card-body + .card-body" aria-expanded="false">
