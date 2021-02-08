@@ -4,7 +4,7 @@ session_start();
 //Поиск пользователя по email. Принимает в параметрах email
 function get_user_by_email ($email, $pdo) {
     
- 
+    $pdo = new PDO("mysql:host=localhost;dbname=project1", "root", "mysql");
     $sql = "SELECT * FROM users WHERE email=:email";
     $statement = $pdo->prepare($sql);
     $statement->execute(["email" => $email]);
@@ -15,6 +15,7 @@ function get_user_by_email ($email, $pdo) {
 //Добавляем пользователя после того, как проверили его существование
 function add_user ($pdo, $email, $password){
 
+    $pdo = new PDO("mysql:host=localhost;dbname=project1", "root", "mysql");
     $sql = "INSERT INTO users (email, password) VALUES (:email, :password)";
     $statement = $pdo->prepare($sql);
     $statement->execute([
@@ -71,10 +72,76 @@ function is_not_logged_in () {
 function check_admin () {
     if($_SESSION['role'] == "admin") {
         return true;
-    }
     return false;
 };
 
+    }
+
+function edit($table, $data, $user_id) {
+    $fields = '';
+
+    foreach($data as $key => $value) {
+        if($key == "Name" || $key == "job" || $key == "phone" || $key == "address" || $key == "role"){
+            $fields .= $key . "=:" . $key . ",";
+        }else {
+            unset($data[$key]);
+        }
+    }
+
+    $data += ['id'=>$user_id];
+    $fields = rtrim($fields, ',');
+
+    $sql = "UPDATE $table SET $fields WHERE id=:id";
+    $statement = $pdo->prepare($sql);
+    $statement->execute($data);
+};
+
+
+function set_status($table, $status, $user_id) {
+
+    $pdo = new PDO("mysql:host=localhost;dbname=project1", "root", "mysql");
+    $sql = "UPDATE $table SET status=:status WHERE id=:id";
+    $statement = $pdo->prepare($sql);
+    $statement->execute(["status" => $status,
+        "id" => $user_id
+    ]);
+};
+
+function upload_avatar($image, $table, $user_id) {
+
+
+    $extension = pathinfo($image['name'], PATHINFO_EXTENSION);
+    $filename = uniqid() . "." . $extension;
+
+    if(move_uploaded_file($image['tmp_name'], "img/avatar/" . $filename))
+
+    $pdo = new PDO("mysql:host=localhost;dbname=project1", "root", "mysql");
+    $sql = "UPDATE $table SET img_avatar=:img_avatar WHERE id=:id";
+    $statement = $pdo->prepare($sql);
+    $statement->execute(["img_avatar" => $filename,
+        "id" => $user_id
+    ]);
+};
+
+function add_social_links($table, $data, $user_id) {
+    $fields = '';
+
+    foreach($data as $key => $value) {
+        if($key == "vk" || $key == "telegram" || $key == "instagram"){
+            $fields .= $key . "=:" . $key . ",";
+        }else {
+            unset($data[$key]);
+        }
+    }
+
+    $data += ['id'=>$user_id];
+    $fields = rtrim($fields, ',');
+
+    $pdo = new PDO("mysql:host=localhost;dbname=project1", "root", "mysql");
+    $sql = "UPDATE $table SET $fields WHERE id=:id";
+    $statement = $pdo->prepare($sql);
+    $statement->execute($data);
+};
 
 //Перенаправление на другую страницу
 function redirect_to ($path){
