@@ -1,7 +1,5 @@
 <?php
-session_start();
 require "functions.php";
-
 $user_id = $_GET['id'];
 
 if (is_not_logged_in()) {
@@ -10,17 +8,16 @@ if (is_not_logged_in()) {
 
 if (!check_admin() and !is_author($_SESSION['id'], $user_id)) {
     set_flash_message("danger", "Это не Ваш профиль!");
-    redirect_to("first/users.php");
+    redirect_to("/first/users.php");
 }
 
 $user = get_user_by_email("reg", null, $user_id);
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
+    <title>Безопаность</title>
     <meta name="description" content="Chartist.html">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no, minimal-ui">
@@ -32,7 +29,7 @@ $user = get_user_by_email("reg", null, $user_id);
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary bg-primary-gradient">
-        <a class="navbar-brand d-flex align-items-center fw-500" href="users.html"><img alt="logo" class="d-inline-block align-top mr-2" src="img/logo.png"> Учебный проект</a> <button aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbarColor02" data-toggle="collapse" type="button"><span class="navbar-toggler-icon"></span></button>
+        <a class="navbar-brand d-flex align-items-center fw-500" href="users.php"><img alt="logo" class="d-inline-block align-top mr-2" src="img/logo.png"> Учебный проект</a> <button aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbarColor02" data-toggle="collapse" type="button"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarColor02">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
@@ -48,54 +45,52 @@ $user = get_user_by_email("reg", null, $user_id);
                 <li class="nav-item">
                     <a class="nav-link" href="#">Выйти</a>
                 </li>
+                <?php endif; ?>
             </ul>
         </div>
     </nav>
     <main id="js-page-content" role="main" class="page-content mt-3">
+        <?php display_flash_message($_SESSION[$name]);?>
         <div class="subheader">
             <h1 class="subheader-title">
-                <i class='subheader-icon fal fa-plus-circle'></i> Редактировать
+                <i class='subheader-icon fal fa-lock'></i> Безопасность
             </h1>
 
         </div>
-        <?php display_flash_message($_SESSION[$name]);?>
-        <form action="edit_user.php?id=<?php echo $user['id']; ?>" method="POST">
+         <form action="security_function.php?id=<?php echo $user['id']; ?>" method="POST">
             <div class="row">
                 <div class="col-xl-6">
                     <div id="panel-1" class="panel">
                         <div class="panel-container">
                             <div class="panel-hdr">
-                                <h2>Общая информация</h2>
+                                <h2>Обновление эл. адреса и пароля</h2>
                             </div>
                             <div class="panel-content">
-                                <!-- username -->
+                                <!-- email -->
                                 <div class="form-group">
-                                    <label class="form-label" for="simpleinput">Имя</label>
-                                    <input type="text" id="simpleinput" class="form-control" name="Name" value="<?php echo $user['Name']; ?>">
+                                    <label class="form-label" for="simpleinput">Email</label>
+                                    <input type="text" id="simpleinput" class="form-control" name="user_email" value="<?php echo $user['email']; ?>">
                                 </div>
 
-                                <!-- title -->
+                                <!-- password -->
                                 <div class="form-group">
-                                    <label class="form-label" for="simpleinput">Место работы</label>
-                                    <input type="text" id="simpleinput" class="form-control" name="job" value="<?php echo $user['job']; ?>">
+                                    <label class="form-label" for="simpleinput">Пароль</label>
+                                    <input type="password" id="simpleinput" class="form-control" name="user_password">
                                 </div>
 
-                                <!-- tel -->
+                                <!-- password confirmation-->
                                 <div class="form-group">
-                                    <label class="form-label" for="simpleinput">Номер телефона</label>
-                                    <input type="text" id="simpleinput" class="form-control" name="phone" value="<?php echo $user['phone']; ?>">
+                                    <label class="form-label" for="simpleinput">Подтверждение пароля</label>
+                                    <input type="password" id="simpleinput" class="form-control" name="user_password">
                                 </div>
 
-                                <!-- address -->
-                                <div class="form-group">
-                                    <label class="form-label" for="simpleinput">Адрес</label>
-                                    <input type="text" id="simpleinput" class="form-control" name="adress" value="<?php echo $user['adress']; ?>">
-                                </div>
+
                                 <div class="col-md-12 mt-3 d-flex flex-row-reverse">
-                                    <button class="btn btn-warning">Редактировать</button>
+                                    <button class="btn btn-warning">Изменить</button>
                                 </div>
                             </div>
                         </div>
+                        
                     </div>
                 </div>
             </div>

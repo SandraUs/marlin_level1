@@ -16,14 +16,13 @@ if(isset($email,$password)) {
 
     if(!empty($user)) {
         $_SESSION["danger"] = " Этот эл. адрес уже занят другим пользователем.";
-        //header("Location: /marlin/page_register.php");
+        //header("Location: /first/page_register.php");
         //exit;
     } else {
 
         add_user($pdo, $email, $password);
-        header("Location: /marlin/page_login.php");
+        header("Location: /first/page_login.php");
         exit;
     }
 
 }
-?>

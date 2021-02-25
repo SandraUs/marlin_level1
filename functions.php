@@ -143,6 +143,37 @@ function add_social_links($table, $data, $user_id) {
     $statement->execute($data);
 };
 
+function is_author ($log_user_id, $edit_user_id) {
+    if ($log_user_id == $edit_user_id) {
+        return true;
+    }
+    return false;
+};
+
+function edit_credentials($user_id, $email, $password) {
+
+    if($email == null) {
+        $sql = "UPDATE $table SET password=:password WHERE id=:id";
+        $statement = $pdo->prepare($sql);
+        $statement->execute(["id" => $user_id,
+            "password" => password_hash($password, PASSWORD_DEFAULT)
+        ]);
+    }elseif($password == null) {
+        $sql = "UPDATE $table SET email=:email WHERE id=:id";
+        $statement = $pdo->prepare($sql);
+        $statement->execute(["id" => $user_id,
+            "email" => $email
+        ]);
+    }else{
+        $sql = "UPDATE $table SET email=:email, password=:password  WHERE id=:id";
+        $statement = $pdo->prepare($sql);
+        $statement->execute(["id" => $user_id,
+            "email" => $email,
+            "password" => password_hash($password, PASSWORD_DEFAULT)
+        ]);
+    }
+};
+
 //Перенаправление на другую страницу
 function redirect_to ($path){
 
