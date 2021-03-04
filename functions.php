@@ -174,6 +174,14 @@ function edit_credentials($user_id, $email, $password) {
     }
 };
 
+function set_status($table, $status, $user_id) {
+    $sql = "UPDATE $table SET status=:status WHERE id=:id";
+    $statement = $pdo->prepare($sql);
+    $statement->execute(["status" => $status,
+        "id" => $user_id
+    ]);
+};
+
 //Перенаправление на другую страницу
 function redirect_to ($path){
 
