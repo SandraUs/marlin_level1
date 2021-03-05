@@ -182,6 +182,15 @@ function set_status($table, $status, $user_id) {
     ]);
 };
 
+function has_image($user_id, $table) {
+    $user_img = get_user_by_email($table, null, $user_id);
+
+    if(empty($user_img['img_avatar'])) {
+        return false;
+    }
+    return true;
+}
+
 //Перенаправление на другую страницу
 function redirect_to ($path){
 
