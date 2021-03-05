@@ -191,6 +191,19 @@ function has_image($user_id, $table) {
     return true;
 }
 
+function delete($table, $user_id) {
+
+    $img_delete = get_user_by_email($table, null, $user_id);
+    if (!empty($img_delete['img_avatar'])){
+        unlink("/first/img/avatar/" . $img_delete['img_avatar']);
+    }
+
+    $sql = "DELETE FROM $table WHERE id=:id";
+    $statement = $pdo->prepare($sql);
+    $statement->bindParam(":id", $user_id);
+    $statement->execute();
+}
+
 //Перенаправление на другую страницу
 function redirect_to ($path){
 
