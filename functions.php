@@ -191,6 +191,19 @@ function has_image($user_id, $table) {
     return true;
 }
 
+function delete_avatar ($table, $user_id) {
+
+    $img_for_delete = get_user_by_email($table, null, $user_id);
+    unlink("/first/img/avatar/" . $img_for_delete['img_avatar']);
+
+    $sql = "UPDATE $table SET img_avatar=:img_avatar WHERE id=:id";
+    $statement = $pdo->prepare($sql);
+    $statement->execute(["img_avatar" => NULL,
+        "id" => $user_id
+    ]);
+
+}
+
 function delete($table, $user_id) {
 
     $img_delete = get_user_by_email($table, null, $user_id);
