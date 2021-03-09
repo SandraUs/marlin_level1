@@ -56,7 +56,7 @@ $user = get_user_by_email("reg", null, $user_id);
             </h1>
 
         </div>
-        <form action="change_media.php?id=<?php echo $user['id']; ?>" method="post" enctype="multipart/form-data">
+        <form action="media_function.php?id=<?php echo $user['id']; ?>" method="post" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-xl-6">
                     <div id="panel-1" class="panel">
@@ -71,7 +71,7 @@ $user = get_user_by_email("reg", null, $user_id);
                                     <?php else: ?>
                                         <img src="/first/img/avatars/avatar.png" alt="" class="img-responsive" width="200">
                                     <?php endif; ?>    
-                                    <img src="/first/img/demo/authors/jovanni.png" alt="" class="img-responsive" width="200">
+                                    
                                 </div>
 
                                 <div class="form-group">
